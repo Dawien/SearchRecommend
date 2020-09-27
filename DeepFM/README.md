@@ -2,22 +2,23 @@
 Code of papers: DeepFM: A Factorization-Machine based Neural Network for CTR Prediction
 
 This code is realized by tensorflow.
+Reference：https://github.com/xiaoleiHou214/Basic-DeepFM-model.git
 
 1、DeepFM是FM + DNN的组合，可以滴低阶特征交互和高阶特征交互进行建模，不需要额外进行特征工程；
 2、模型wide-FM部分与deep-DNN部分共享输入，且共享Embedding向量，可以高效的进行联合训练；
 3、不需要利用FM进行Embedding的预训练。
 
-- 工程结构：
-   DeepFM.py -- 模型的主要构建部分
-   DeepFMTrain.py -- 模型训练
-   DeepFMEval.py -- 模型的推断预测
-   DateProces.py -- 数据处理，将数据转换成特征索引和特征值存在，并统计特征的维度
-   ParseConfig.py -- 解析参数文件：config.conf
-   run_deep_fm.py -- 主函数入口，训练模型并验证评估
+工程结构：
+1、DeepFM.py -- 模型的主要构建部分
+2、DeepFMTrain.py -- 模型训练
+3、DeepFMEval.py -- 模型的推断预测
+4、DateProces.py -- 数据处理，将数据转换成特征索引和特征值存在，并统计特征的维度
+5、ParseConfig.py -- 解析参数文件：config.conf
+6、run_deep_fm.py -- 主函数入口，训练模型并验证评估
 
--- 数据转换说明，结合数据处理代码可以更直观的理解
+数据转换说明，结合数据处理代码可以更直观的理解
 1、需要给每一个特征对应一个K维的Embedding，那么就需要得到连续变量或离散变量对应的特征索引feature_index，举例：
-fileds：        性别                 周几                  职业
+fileds：         性别                 周几                  职业
 range：         男/女                周一~周天             学生/白领
 one-hot：
              男          女           一        二        三        四        五        六        七        学生        白领
