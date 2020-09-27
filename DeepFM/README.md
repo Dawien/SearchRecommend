@@ -1,4 +1,4 @@
-# SearchRecommend
+# DeepFM
 Code of papers: DeepFM: A Factorization-Machine based Neural Network for CTR Prediction
 
 This code is realized by tensorflow.
