@@ -7,7 +7,7 @@ This code is realized by tensorflow.
 2、模型wide-FM部分与deep-DNN部分共享输入，且共享Embedding向量，可以高效的进行联合训练；
 3、不需要利用FM进行Embedding的预训练。
 
--- 工程结构：
+- 工程结构：
    DeepFM.py -- 模型的主要构建部分
    DeepFMTrain.py -- 模型训练
    DeepFMEval.py -- 模型的推断预测
