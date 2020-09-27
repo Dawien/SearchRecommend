@@ -20,11 +20,11 @@ This code is realized by tensorflow.
 fileds：        性别                 周几                  职业
 range：         男/女                周一~周天             学生/白领
 one-hot：
-             男            女           一        二        三        四        五        六        七        学生        白领
+             男          女           一        二        三        四        五        六        七        学生        白领
 feature index：
-             0              1            2            3        4          5          6         7           8           9            10
+             0           1            2         3        4         5         6        7         8         9          10
 实例：  男/二/学生     对应的feature index： 0，3，9
-        女/四/白领     对应的feature index： 1，5，10
+       女/四/白领     对应的feature index： 1，5，10
 
 考虑到特征会有连续变量，也可以给他们创建对应的特征索引，如：
 fileds：        性别            周几                  职业                  体重                工资
@@ -34,7 +34,7 @@ one-hot：
 feature index： 
       0         1       2        3     4      5      6      7      8       9        10       11       12
 实例：  男/二/学生/50/300       对应的feature index： 0，3，9，11，12
-        女/四/白领/48/1000     对应的feature index： 1，5，10，11，12
+       女/四/白领/48/1000      对应的feature index： 1，5，10，11，12
 但在FM中，不仅仅是有Embedding的內积，特征值也是需要的。对于离散变量来说，特征值 = 1，对于连续变量来说，特征值就是其本身了。如此一来，我们就能得到如下的数据格式：
 fileds：         性别            周几                  职业                  体重                工资
 range：          男/女           周一~周天            学生/白领             xx KG                xx W
@@ -43,7 +43,7 @@ one-hot：
 feature index： 
         0        1       2      3      4      5      6      7      8       9        10       11       12
 实例：  男/二/学生/50/300  -  feature index： 0，3，9，11，12
-                           - feature value： 1，1，1，50，300
-        女/四/白领/48/1000  - feature index： 1，5，10，11，12
-                            - feature value：1，1，1，48，1000
+                         - feature value： 1，1，1，50，300
+       女/四/白领/48/1000  - feature index： 1，5，10，11，12
+                          - feature value：1，1，1，48，1000
 通过对上述数据的观察，可以知道，feature_size = 13，field_size = 5
