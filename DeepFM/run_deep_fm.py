@@ -83,8 +83,8 @@ def run_base_model_dfm(train_df, test_df, data_folds, params):
         test_meta_y[:, 0] += dfm.eval.predict(test_Xi, test_Xv)
 
         gini_results_cv[idx] = gini_norm(valid_y_, train_meta_y[valid_idx])
-        gini_results_epoch_train[idx] = dfm.train_results
-        gini_results_epoch_valid[idx] = dfm.valid_results
+        gini_results_epoch_train[idx, :len(dfm.train_results)] = dfm.train_results
+        gini_results_epoch_valid[idx, :len(dfm.valid_results)] = dfm.valid_results
 
     test_meta_y = test_meta_y / float(len(data_folds))
 

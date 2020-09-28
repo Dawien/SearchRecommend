@@ -147,13 +147,14 @@ class Train:
                       % (epoch, self.train_results[-1], time.time() - t1))
 
             if need_valid and early_stopping and self.training_termination(self.valid_results):
+                print("Early Stopping!!")
                 break
 
         # fit a few more epochs on train+valid until result reaches the best_train_score
         if need_valid and refit:
             greater_is_better = self.params.greater_is_better
             if greater_is_better:
-                best_valid_score = map(self.valid_results)
+                best_valid_score = max(self.valid_results)
             else:
                 best_valid_score = min(self.valid_results)
 
@@ -171,18 +172,20 @@ class Train:
 
                     batch_Xi = torch.tensor(batch_Xi, dtype=torch.long)
                     batch_Xv = torch.tensor(batch_Xv, dtype=torch.float)
-                    batch_y = torch.tensor(batch_y, dtype=torch.float)
+                    batch_y = torch.tensor(batch_y, dtype=torch.long)
 
                     optimizer.zero_grad()
 
                     output, _, _, _ = self.deepfm(batch_Xi, batch_Xv)
                     if loss_type == "logloss":
                         # for classification
-                        output = F.logsigmoid(output)
-                        loss = F.cross_entropy(batch_y, output)
+                        output = F.sigmoid(output)
+                        loss = -torch.mul(batch_y, torch.log(output)) \
+                               - torch.mul((1 - batch_y), torch.log(1 - output))
+                        loss = torch.mean(loss)
                     elif loss_type == "mse":
                         # for regression
-                        loss = F.mse_loss(batch_y, output)
+                        loss = F.mse_loss(input=output, target=batch_y)
                     else:
                         raise ValueError("Unknown loss type, should be one of 'logloss/mes'")
 
@@ -191,7 +194,7 @@ class Train:
                         loss += self.params.l2_reg * torch.norm(self.deepfm.final_W, 2)
                         if self.params.use_deep:
                             for weight in self.deepfm.deep_layers:
-                                loss += self.params.l2_reg * torch.norm(weight, 2)
+                                loss += self.params.l2_reg * torch.norm(weight.W, 2)
                     print("epoch: %d, loss: %.4f" % (epoch, loss.item()))
 
                     # backward
@@ -206,12 +209,13 @@ class Train:
                 if abs(train_result - best_train_score) < 0.001 \
                     or (greater_is_better and train_result > best_train_score) \
                     or ((not greater_is_better) and train_result < best_train_score):
+                    print("Find best train score!!")
                     break
 
     ## early stopping
     def training_termination(self, valid_result):
         if len(valid_result) > 5:
-            if self.greater_is_better:
+            if self.params.greater_is_better:
                 if valid_result[-1] < valid_result[-2] < valid_result[-3] < valid_result[-4] < valid_result[-5]:
                     return True
             else:
