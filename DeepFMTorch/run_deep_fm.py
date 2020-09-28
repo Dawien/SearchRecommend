@@ -8,10 +8,10 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from DataProcess import LoadData, FeatureDictionay, DataParser
-from torchTrainDeepFM import Train
-from Metrics import gini_norm
-from ParseConfig import load_config
+from data_process import LoadData, FeatureDictionay, DataParser
+from torch_train_deepFM import Train
+from metrics import gini_norm
+from parse_config import load_config
 from sklearn.model_selection import StratifiedKFold
 from collections import namedtuple
 

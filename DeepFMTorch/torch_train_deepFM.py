@@ -11,7 +11,7 @@ import torch.nn.functional as F
 import numpy as np
 from torch import optim
 from torch_deepFM import DeepFM
-from Metrics import gini_norm
+from metrics import gini_norm
 
 class Train:
 
