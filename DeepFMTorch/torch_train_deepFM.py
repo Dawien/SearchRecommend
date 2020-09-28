@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2020/9/28 10:07 上午
 # @Author  : Dawein
-# @File    : torchTrainDeepFM.py
+# @File    : torch_train_deepFM.py
 # @Software : PyCharm
 
 import time
@@ -10,7 +10,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 from torch import optim
-from torchDeepFM import DeepFM
+from torch_deepFM import DeepFM
 from Metrics import gini_norm
 
 class Train:
@@ -102,18 +102,20 @@ class Train:
                                                              self.params.batch_size, i)
                 batch_Xi = torch.tensor(batch_Xi, dtype=torch.long)
                 batch_Xv = torch.tensor(batch_Xv, dtype=torch.float)
-                batch_y = torch.tensor(batch_y, dtype=torch.float)
+                batch_y = torch.tensor(batch_y, dtype=torch.long)
 
                 optimizer.zero_grad()
 
                 output, _, _, _ = self.deepfm(batch_Xi, batch_Xv)
                 if loss_type == "logloss":
                     # for classification
-                    output = F.logsigmoid(output)
-                    loss = -torch.mean(batch_y * output - (1.0 - batch_y) * (1 - output))
+                    output = F.sigmoid(output)
+                    loss = -torch.mul(batch_y, torch.log(output)) \
+                           - torch.mul((1-batch_y), torch.log(1-output))
+                    loss = torch.mean(loss)
                 elif loss_type == "mse":
                     # for regression
-                    loss = F.mse_loss(batch_y, output)
+                    loss = F.mse_loss(input=output, target=batch_y)
                 else:
                     raise ValueError("Unknown loss type, should be one of 'logloss/mes'")
 

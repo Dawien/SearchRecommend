@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2020/9/25 5:57 下午
 # @Author  : Dawein
-# @File    : DataProcess.py
+# @File    : data_process.py
 # @Software : PyCharm
 
 import numpy as np

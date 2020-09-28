@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2020/9/27 10:09 上午
 # @Author  : Dawein
-# @File    : runDeepFM.py
+# @File    : run_deep_fm.py
 # @Software : PyCharm
 
 import os

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2020/9/28 9:21 上午
 # @Author  : Dawein
-# @File    : torchDeepFM.py
+# @File    : torch_deepFM.py
 # @Software : PyCharm
 
 """

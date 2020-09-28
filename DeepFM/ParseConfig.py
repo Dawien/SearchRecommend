@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2020/9/27 11:04 上午
 # @Author  : Dawein
-# @File    : ParseConfig.py
+# @File    : parse_config.py
 # @Software : PyCharm
 
 import os
