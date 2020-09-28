@@ -9,8 +9,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from DataProcess import LoadData, FeatureDictionay, DataParser
-from DeepFMTrain import Train
-from DeepFMEval import Eval
+from torchTrainDeepFM import Train
 from Metrics import gini_norm
 from ParseConfig import load_config
 from sklearn.model_selection import StratifiedKFold
@@ -79,8 +78,8 @@ def run_base_model_dfm(train_df, test_df, data_folds, params):
 
         dfm.training(train_Xi_, train_Xv_, train_y_, valid_Xi_, valid_Xv_, valid_y_)
 
-        train_meta_y[valid_idx, 0] = dfm.eval.predict(valid_Xi_, valid_Xv_)
-        test_meta_y[:, 0] += dfm.eval.predict(test_Xi, test_Xv)
+        train_meta_y[valid_idx, 0] = dfm.predict(valid_Xi_, valid_Xv_)
+        test_meta_y[:, 0] += dfm.predict(test_Xi, test_Xv)
 
         gini_results_cv[idx] = gini_norm(valid_y_, train_meta_y[valid_idx])
         gini_results_epoch_train[idx] = dfm.train_results

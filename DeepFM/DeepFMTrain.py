@@ -89,7 +89,7 @@ class Train():
                 print("epoch: %d, train-result: %.4f, cost-time: %.2f s"
                       % (epoch, self.train_results[-1], time.time() - t1))
 
-            if need_valid and early_stopping and self.training(self.valid_results[-1]):
+            if need_valid and early_stopping and self.training_termination(self.valid_results):
                 break
 
         # fit a few more epoch on train+valid until result reaches the best_train_score
